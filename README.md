@@ -2,6 +2,8 @@
 
 ZKP maze + account abstraction prototype
 
+Generated from https://github.com/privacy-scaling-explorations/zkp-app-boilerplate
+
 ## Pre requisites
 
 * [nodejs](https://nodejs.org)
