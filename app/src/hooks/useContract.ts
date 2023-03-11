@@ -1,6 +1,6 @@
 import { useMemo, useCallback, useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
-import { ZkApp__factory } from "contracts";
+import { ZkApp__factory } from "../../../contracts/typechain";
 import { BigNumber, BigNumberish } from "ethers";
 
 export const useZKApp = (address: string) => {
