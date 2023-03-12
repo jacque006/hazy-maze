@@ -31,7 +31,7 @@ template ArraySelector(arrLen) {
     signal output out;
 
     // Ensure that index < choices
-    // TODO We can make the number of bits based on width * height
+    // TODO We can make the number of bits based on width * height (mazeArea)
     signal indexInRange <== LessThan(252)([idx, arrLen]);
     indexInRange === 1;
 
@@ -56,6 +56,9 @@ template ArraySelector(arrLen) {
  * from a start point to an end point is valid. The path is private.
  */
 template Maze(width, height) {
+    // Total area of the maze
+    var mazeArea = width * height;
+
     // constants
     /**
      * Tile values
@@ -79,14 +82,14 @@ template Maze(width, height) {
      *  0, 0, 3]
      *
      */
-    signal input tiles[width * height];
+    signal input tiles[mazeArea];
 
     // private
     /**
      * The path through the maze as an array of tile indexes
-     * The mazimum possible path through any maze with be width * height
+     * The mazimum possible path through any maze with be width * height (mazeArea)
      */
-    signal input path[width * height];
+    signal input path[mazeArea];
 
     // output
     /**
@@ -95,17 +98,17 @@ template Maze(width, height) {
     // TODO implement
     // signal output pathLen;
 
-    component arrSelectors[width * height];
-    signal canMoveToTile[width * height];
-    component orGates[width * height];
-    component mazeCompleted = CalculateTotal(width * height);
+    component arrSelectors[mazeArea];
+    signal canMoveToTile[mazeArea];
+    component orGates[mazeArea];
+    component mazeCompleted = CalculateTotal(mazeArea);
 
     // Check the path through the maze
-    for (var i = 0; i < width * height; i++) {
+    for (var i = 0; i < mazeArea; i++) {
         // Setup array selector which will return
         // the tile value for a given path index
-        arrSelectors[i] = ArraySelector(width * height);
-        for (var j = 0; j < width * height; j++) {
+        arrSelectors[i] = ArraySelector(mazeArea);
+        for (var j = 0; j < mazeArea; j++) {
             arrSelectors[i].in[j] <== tiles[j];
         }
         arrSelectors[i].idx <== path[i];
