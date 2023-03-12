@@ -1,33 +1,28 @@
 pragma circom 2.1.4;
+include "../../node_modules/circomlib/circuits/comparators.circom";
 
 /**
  * Component which verifies that a path through a through a maze
  * from a start point to an end point is valid. The path is private.
  */
-template MazeVerifier(width, height) {
+template Maze(width, height) {
     // public
     /**
-     * 2d boolean array of maze tiles, with:
-     * - true indicating the tile is passable
-     * - false indicating the tile is not passable (wall)
+     * 2d bit array of maze tiles, with:
+     * - 0 indicating the tile is passable
+     * - 1 indicating the tile is not passable (wall)
+     * - 2 indicating the start of the maze
+     * - 3 indicating the end of the maze
      *
-     * Example maze with the center blocked off:
+     * Example 3x3 maze with the center blocked off:
      * [
-     *   [true, true, true],
-     *   [true, false, true],
-     *   [true, true, true]
+     *   [2, 0, 0],
+     *   [0, 1, 0],
+     *   [0, 0, 3]
      * ]
      *
      */
     signal input tiles[width][height];
-    /**
-     * The start point ([x, y]) in the maze. It must be passable (true)
-     */
-    signal input start[2];
-    /**
-     * The end point ([x, y]) in the maze. It must be passable (true)
-     */
-    signal input end[2];
 
     // private
     /**
@@ -40,28 +35,33 @@ template MazeVerifier(width, height) {
     /**
      * The length of the path taken through the maze
      */
-    signal output pathLen;
+    // TODO implement
+    // signal output pathLen;
+
+    var PASSABLE_TILE = 0;
+    var WALL_TILE = 1;
+    var START_TILE = 2;
+    var END_TILE = 3;
+
+    signal pathSignals[width * height];
+
+    // Ensure start is in range of the maze
+    // signal isStartXInRange <== LessEqThan(252)([start[0], width]);
+    // isStartXInRange === 1;
 
     // Ensure start is passable
-    assert(tiles[start[0]][start[1]]);
-
-    // TODO Ensure first path point is at start
-
-    // Ensure end is passable
-    assert(tiles[end[0]][end[1]]);
+    // signal isStartPassable <== IsZero()(tiles[startX][0]);
+    // isStartPassable === 1;
 
     // Check the path through the maze
-    var curPathLen = 0;
     for (var i = 0; i < width * height; i++) {
-        // Check that the point is passable
-        assert(tiles[path[i][0]][path[i][1]]);
+        // TODO How can we extract the path point and use as an index on the tiles?
+        pathSignals[i] <== IsEqual()([tiles[0][0], PASSABLE_TILE]);
+        pathSignals[i] === 1;
+        // TODO Check that the point is passable
         // TODO ensure current path point is connected to prevous path point
         // TODO check if we've reached the end and terminate the loop (break?)
-        curPathLen = i + 1;
     }
-
-    // output the length of the path taken
-    pathLen <== curPathLen;
 }
 
-component main { public [tiles, start, end] } = MazeVerifier(3, 3);
+component main { public [tiles] } = Maze(3, 3);

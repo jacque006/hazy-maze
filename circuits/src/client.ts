@@ -8,6 +8,10 @@ export interface Proof {
   c: [bigint, bigint];
 }
 
+export type Tiles = bigint[][];
+export type Point = [bigint, bigint];
+export type Path = Point[];
+
 export class ZKPClient {
   private _calculator: any;
   private _babyjub: any;
@@ -47,27 +51,15 @@ export class ZKPClient {
    * @dev customize this functions for your own circuit!
    */
   async prove({
-    M,
-    Ax,
-    Ay,
-    S,
-    R8x,
-    R8y,
+    tiles,
+    path,
   }: {
-    M: bigint;
-    Ax: bigint;
-    Ay: bigint;
-    S: bigint;
-    R8x: bigint;
-    R8y: bigint;
+    tiles: Tiles;
+    path: Path;
   }): Promise<Proof> {
     const inputs = {
-      M,
-      Ax,
-      Ay,
-      S,
-      R8x,
-      R8y,
+      tiles,
+      path,
     };
     const wtns = await this.calculator.calculateWTNSBin(inputs, 0);
     const { proof } = await snarkjs.groth16.prove(this._zkey, wtns);

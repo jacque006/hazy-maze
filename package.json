@@ -18,6 +18,10 @@
     "demo": "./demo.sh"
   },
   "private": true,
+  "dependencies": {
+    "circomlibjs": "0.1.7",
+    "snarkjs": "0.6.8"
+  },
   "devDependencies": {
     "ts-node": "^10.4.0"
   },

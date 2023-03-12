@@ -19,9 +19,7 @@
   ],
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",
-    "circuits": "^0.1.0",
-    "circomlibjs": "^0.1.2",
-    "snarkjs": "^0.4.16"
+    "circuits": "^0.1.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.3",
