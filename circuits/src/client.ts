@@ -8,10 +8,6 @@ export interface Proof {
   c: [bigint, bigint];
 }
 
-export type Tiles = bigint[][];
-export type Point = [bigint, bigint];
-export type Path = Point[];
-
 export class ZKPClient {
   private _calculator: any;
   private _babyjub: any;
@@ -54,8 +50,8 @@ export class ZKPClient {
     tiles,
     path,
   }: {
-    tiles: Tiles;
-    path: Path;
+    tiles: bigint[];
+    path: bigint[];
   }): Promise<Proof> {
     const inputs = {
       tiles,

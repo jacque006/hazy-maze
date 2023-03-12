@@ -1,5 +1,5 @@
-import { ZKPClient, Proof, Tiles, Point, Path } from "./client";
+import { ZKPClient, Proof } from "./client";
 import { EdDSA } from "./eddsa";
 
 export { ZKPClient, EdDSA };
-export type { Proof, Tiles, Point, Path };
+export type { Proof };
