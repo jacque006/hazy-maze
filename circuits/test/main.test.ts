@@ -19,11 +19,10 @@ describe("Test zkp circuit and scripts", function () {
   });
   it("Should able to prove and verify the zkp", async function () {
     // center impassable
-    // TODO add start, end values
     const tiles = [
-      0n, 0n, 0n,
+      2n, 0n, 0n,
       0n, 1n, 0n,
-      0n, 0n, 0n,
+      0n, 0n, 3n,
     ];
     const path = [
       0n,
@@ -31,11 +30,14 @@ describe("Test zkp circuit and scripts", function () {
       6n,
       7n,
       8n,
-      // empty points needed to fill out path
-      0n,
-      0n,
-      0n,
-      0n,
+      // empty points needed to fill out path.
+      // currently, these need to target a passable (0) tile.
+      // this will need to change once we check if the
+      // path indexes are connected.
+      1n,
+      1n,
+      1n,
+      1n,
     ];
 
 
